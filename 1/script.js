@@ -1,26 +1,34 @@
-var hashTable = function(arr, size) {
-    var items = arr;
-  
-  var setHash = function() {
-  	var result = new Array(size);
-    items.forEach(function(el) {
-    	result[el%size] = el;
-    });
-    return result;
-  } // 해시 충돌 발생!
-  
+var hashTable = function(size) {
   // property
-  this.bucket = setHash();
-  this.length = arr.length;
+  this.bucket = new Array(size);
+  this.length = 0;
   this.size = size;
   
-  // method
+    // method
   this.insertKey = function(key) {
-  	this.bucket[key%size] = key;
+  	const index = key%size;
+      
+    if (!this.bucket[index]) {
+        this.bucket[index] = key;
+        this.length++;
+        return 1;
+    }
+      
+    let tmp = this.bucket[index];
+    let ti = (index+1)==size ? -1 : index;
+    this.bucket[index] = key;
+    this.length++;
+      
+    while (this.bucket[ti+1]) ti++;
+    
+   	ti++;
+    this.bucket[ti] = tmp;
+    return 0;
   }
 }
 
-var keys = [256, 9501, 94, 394, 26, 150, 76];
-var h1 = new hashTable(keys, 23);
+var h1 = new hashTable(23);
+h1.insertKey(91);
+console.log(`${h1.bucket}, ${h1.length}`);
 
-console.log(h1.bucket);
+/* 버그 고칠 것. */

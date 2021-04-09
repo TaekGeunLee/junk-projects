@@ -11,3 +11,4 @@
 
 * version 1 : keys를 hash 테이블에 배치하는 코드 구현. 해시 충돌에 대한 대책은 아직 못함.
 * version 2 : 클래스 hashTable의 메서드, insertKey() 추가. 해당 메서드는 인자로 받은 key가 테이블에 할당됨.
+* version 3 : 클래스 hashTable의 메서드, insertKey() 완성.
