@@ -1,34 +1,39 @@
-var hashTable = function(size) {
+var hashTable = function(arr, size) {
   // property
   this.bucket = new Array(size);
   this.length = 0;
   this.size = size;
-  
-    // method
-  this.insertKey = function(key) {
-  	const index = key%size;
-      
-    if (!this.bucket[index]) {
-        this.bucket[index] = key;
-        this.length++;
-        return 1;
-    }
-      
+    
+  this.setTable(arr);
+}
+
+hashTable.prototype.insertKey = function(key) {
+    const index = key % this.size;
     let tmp = this.bucket[index];
-    let ti = (index+1)==size ? -1 : index;
+    let ti = (index+1)==this.size ? -1 : index;
     this.bucket[index] = key;
     this.length++;
-      
+    
+    if (!this.bucket[index]) return this.bucket;
+    
     while (this.bucket[ti+1]) ti++;
     
    	ti++;
     this.bucket[ti] = tmp;
-    return 0;
-  }
+    return this.bucket;
 }
 
-var h1 = new hashTable(23);
-h1.insertKey(91);
-console.log(`${h1.bucket}, ${h1.length}`);
+hashTable.prototype.setTable = function(arr) {
+  for (var i=0; i<arr.length; i++) {
+      this.insertKey(arr[i]);
+  }    
+}
 
-/* 버그 고칠 것. */
+hashTable.prototype.dropKey = function (index) {
+    this.bucket[index] = undefined;
+}
+
+var h1 = new hashTable([26, 94], 23);
+
+console.log(`bucket : ${h1.bucket}`);
+console.log(`length : ${h1.length}`);
